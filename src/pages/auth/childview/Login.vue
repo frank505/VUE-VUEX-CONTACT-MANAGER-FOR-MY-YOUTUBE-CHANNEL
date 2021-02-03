@@ -26,10 +26,11 @@
         >
           <div class="form-group">
             <label>Email</label>
-            <input class="form-control"  type="email" />
+            <input class="form-control" v-model="formData.email" type="email" />
             <span class="error">{{ errors[0] }}</span>
           </div>
         </ValidationProvider>
+
 
         <ValidationProvider
           name="Password"
