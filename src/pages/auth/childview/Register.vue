@@ -5,8 +5,15 @@
       <a-card title="User Register" >
     <template #extra><a href="#"></a></template>
       
-         <div id="response-area">
-             {{registerResponse}}
+         <div id="response-area"
+         :class="registerResponse.success==false?'alert alert-danger':
+         registerResponse.success==true?
+         'alert alert-success'
+         :
+         ''
+         "
+         >
+             {{registerResponse.message}}
          </div>
 
       <ValidationObserver v-slot="{ handleSubmit }">
@@ -99,9 +106,12 @@ export default {
  methods: {
       ...mapActions("Auth", ["register"]),
 
-     onSubmit() {
+     onSubmit() 
+     {
       this.register(this.formData);
     },
+  
+
   }
 
 }

@@ -14,26 +14,45 @@ export default {
            state.loginResponse = "";
           },
         [Types.LOGIN_LOADING] (state) {
-            state.loginResponse = "loading";
+            state.loginResponse = "loading..";
            },
         [Types.LOGIN_SUCCESS] (state, data) {
-            state.loginResponse = data;
+            state.loginResponse = data.message;
         },
         [Types.LOGIN_ERROR] (state, data) {
             state.loginResponse = data;
            },
          [Types.RESTART_REGISTER_RESPONSE] (state) {
-             state.registerResponse = "loading";
+             state.registerResponse = "";
             },
         [Types.REGISTER_LOADING] (state) {
-                state.registerResponse = "loading";
+                state.registerResponse = "loading..";
             },
         [Types.REGISTER_SUCCESS] (state, data) {
                 state.registerResponse = data;
             },
-        [Types.REGISTER_ERROR] (state, data) {
-                state.registerResponse = data;
-               },         
+        [Types.REGISTER_ERROR] (state, data) 
+        {
+            if(typeof data.error == 'undefined')
+            {
+                let dataErr = {success:false,message:data.error};
+                state.registerResponse = dataErr;
+
+            }else if(typeof data.error =='object')
+            {
+                Object.keys(data.error).map((keys)=>{
+                    
+                    let dataErr = {success:false,message:data.error[keys][0]};
+                   state.registerResponse = dataErr;
+                   
+                  });
+            }else if(typeof data.error == 'string')
+            {
+                let dataErr = {success:false, message:data.error};
+                state.registerResponse = dataErr;
+            
+            }
+        },         
     },
     actions: 
     {

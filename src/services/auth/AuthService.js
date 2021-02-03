@@ -8,6 +8,7 @@ export const LoginService = (credentials) =>{
     let addedUrl = "user/login";
     return http.postData(credentials,addedUrl,"POST").then(data=>{
         console.log(JSON.stringify(data));
+        
         return data;
     }).catch((error)=> {console.log(error)
    return error; 
@@ -20,6 +21,7 @@ export const RegisterService = (credentials) =>{
     let addedUrl = "user/register";
     return http.postData(credentials,addedUrl,"POST").then(data=>{
         console.log(JSON.stringify(data));
+        console.log(data);
         return data;
     }).catch((error)=> {console.log(error)
    return error; 
