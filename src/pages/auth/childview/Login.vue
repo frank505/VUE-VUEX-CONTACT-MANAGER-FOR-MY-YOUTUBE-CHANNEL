@@ -26,9 +26,7 @@
         >
           <div class="form-group">
             <label>Email</label>
-            <input class="form-control" 
-             :class="errors[0]==''?error-text-input: error-text-input"
-            v-model="formData.email" type="email" />
+            <input class="form-control"  type="email" />
             <span class="error">{{ errors[0] }}</span>
           </div>
         </ValidationProvider>
@@ -65,6 +63,7 @@
 import { mapState, mapActions } from "vuex";
 export default {
   
+  
    data: () => ({
     formData: {
       email: "",
@@ -73,16 +72,24 @@ export default {
     },
   }),
   computed: {
-    ...mapState("Auth", ["loginResponse","clearLoginState"])
+    ...mapState("Auth", ["loginResponse"])
   },
 
  methods: {
-      ...mapActions("Auth", ["login"]),
+      ...mapActions("Auth", ["login","clearLoginState"]),
 
      onSubmit() {
       this.login(this.formData);
     },
+  },
+
+ beforeRouteLeave (to, from, next) {
+   console.log(this.$store._actions);
+   this.clearLoginState();
+   next();
+    
   }
+
 
 }
 

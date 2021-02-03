@@ -88,7 +88,7 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  
+
    data: () => ({
     formData: {
         firstname:"",
@@ -100,11 +100,11 @@ export default {
   }),
    
    computed: {
-    ...mapState("Auth", ["registerResponse","clearRegisterState"])
+    ...mapState("Auth", ["registerResponse"])
   },
 
  methods: {
-      ...mapActions("Auth", ["register"]),
+      ...mapActions("Auth", ["register","clearRegisterState"]),
 
      onSubmit() 
      {
@@ -112,6 +112,11 @@ export default {
     },
   
 
+  },
+
+ beforeRouteLeave (to, from, next) {
+   this.clearRegisterState();
+   next();
   }
 
 }
