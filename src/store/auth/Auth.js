@@ -1,6 +1,7 @@
 import { LoginService, RegisterService } from "../../services/auth/AuthService";
 import * as Types from "./MutationTypes"
 import Cookies from 'js-cookie'
+import router from '../../router'
 
 export default {
     namespaced: true,
@@ -17,10 +18,28 @@ export default {
             state.loginResponse = "loading..";
            },
         [Types.LOGIN_SUCCESS] (state, data) {
-            state.loginResponse = data.message;
+            state.loginResponse = data;
         },
         [Types.LOGIN_ERROR] (state, data) {
-            state.loginResponse = data;
+            if(typeof data.error == 'undefined')
+            {
+                let dataErr = {success:false,message:data.error};
+                state.loginResponse = dataErr;
+
+            }else if(typeof data.error =='object')
+            {
+                Object.keys(data.error).map((keys)=>{
+                    
+                    let dataErr = {success:false,message:data.error[keys][0]};
+                   state.loginResponse = dataErr;
+                   
+                  });
+            }else if(typeof data.error == 'string')
+            {
+                let dataErr = {success:false, message:data.error};
+                state.loginResponse = dataErr;
+            
+            }
            },
          [Types.RESTART_REGISTER_RESPONSE] (state) {
              state.registerResponse = "";
@@ -56,22 +75,32 @@ export default {
     },
     actions: 
     {
-      login ({commit}, data,router)
+        clearLoginState({commit})
+        {
+            commit(Types.RESTART_LOGIN_RESPONSE);
+        },
+      login ({commit}, data)
       {
+          console.log(router);
           commit(Types.RESTART_LOGIN_RESPONSE);
           commit(Types.LOGIN_LOADING);
           LoginService(data).then((response)=>
           {
              if(response.success == true)
              {
-                 commit(Types.LOGIN_SUCCESS,response);
-                 Cookies.set("user-auth",response.token);
+                Cookies.set("user-auth",response.token);
                 router.push('/dashboard');
+                 commit(Types.LOGIN_SUCCESS,response);
+                 
              }else
              {
                commit(Types.LOGIN_ERROR,response);
              }
           });
+      },
+      clearRegisterState({commit})
+      {
+          commit(Types.RESTART_REGISTER_RESPONSE);
       },
       register ({commit}, data)
       {

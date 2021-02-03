@@ -100,7 +100,7 @@ export default {
   }),
    
    computed: {
-    ...mapState("Auth", ["registerResponse"])
+    ...mapState("Auth", ["registerResponse","clearRegisterState"])
   },
 
  methods: {

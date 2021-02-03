@@ -4,7 +4,18 @@
     <div class="card-parent-item">
       <a-card title="User Login" >
     <template #extra><a href="#"></a></template>
-      
+        
+        <div id="response-area"
+         :class="loginResponse.success==false?'alert alert-danger':
+         loginResponse.success==true?
+         'alert alert-success'
+         :
+         ''
+         "
+         >
+             {{loginResponse.message}}
+         </div>
+
       <ValidationObserver v-slot="{ handleSubmit }">
       <form @submit.prevent="handleSubmit(onSubmit)">
         
@@ -51,7 +62,7 @@
 </template>
 <script>
 
-// import { mapState, mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   
    data: () => ({
@@ -61,10 +72,15 @@ export default {
      
     },
   }),
+  computed: {
+    ...mapState("Auth", ["loginResponse","clearLoginState"])
+  },
 
  methods: {
+      ...mapActions("Auth", ["login"]),
+
      onSubmit() {
-      console.log(this.formData);
+      this.login(this.formData);
     },
   }
 
