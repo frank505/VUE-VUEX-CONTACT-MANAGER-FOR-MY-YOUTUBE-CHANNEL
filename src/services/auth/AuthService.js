@@ -1,4 +1,4 @@
-import HttpService from './HttpService';
+import HttpService from '../HttpService';
 import Cookies from 'js-cookie'
 
 

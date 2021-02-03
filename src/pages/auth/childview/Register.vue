@@ -5,6 +5,10 @@
       <a-card title="User Register" >
     <template #extra><a href="#"></a></template>
       
+         <div id="response-area">
+             {{registerResponse}}
+         </div>
+
       <ValidationObserver v-slot="{ handleSubmit }">
       <form @submit.prevent="handleSubmit(onSubmit)">
 
@@ -73,6 +77,9 @@
 
 </template>
 <script>
+
+import { mapState, mapActions } from "vuex";
+
 export default {
   
    data: () => ({
@@ -84,10 +91,16 @@ export default {
      
     },
   }),
+   
+   computed: {
+    ...mapState("Auth", ["registerResponse"])
+  },
 
  methods: {
+      ...mapActions("Auth", ["register"]),
+
      onSubmit() {
-      console.log(this.formData);
+      this.register(this.formData);
     },
   }
 

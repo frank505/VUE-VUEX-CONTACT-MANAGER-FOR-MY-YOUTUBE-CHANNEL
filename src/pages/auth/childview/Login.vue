@@ -15,7 +15,9 @@
         >
           <div class="form-group">
             <label>Email</label>
-            <input class="form-control" v-model="formData.email" type="email" />
+            <input class="form-control" 
+             :class="errors[0]==''?error-text-input: error-text-input"
+            v-model="formData.email" type="email" />
             <span class="error">{{ errors[0] }}</span>
           </div>
         </ValidationProvider>
@@ -48,6 +50,8 @@
 
 </template>
 <script>
+
+// import { mapState, mapActions } from "vuex";
 export default {
   
    data: () => ({
@@ -82,5 +86,8 @@ export default {
 .error {
   color: red;
   font-weight: bolder;
+}
+.error-text-input{
+    border-color: red;
 }
 </style>
