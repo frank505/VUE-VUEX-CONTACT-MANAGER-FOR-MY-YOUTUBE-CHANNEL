@@ -2,7 +2,7 @@
 
     <form>
     <div class="card-parent-item">
-      <a-card title="User Login" >
+      <a-card title="User Register" >
     <template #extra><a href="#"></a></template>
       
       <ValidationObserver v-slot="{ handleSubmit }">

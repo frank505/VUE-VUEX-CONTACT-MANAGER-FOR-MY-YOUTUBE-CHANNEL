@@ -13,6 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "ant-design-vue": "^1.7.2",
     "core-js": "^3.6.5",
+    "js-cookie": "^2.2.1",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.11",
     "vue-router": "^3.5.1",
